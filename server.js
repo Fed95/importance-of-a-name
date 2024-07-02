@@ -1,22 +1,24 @@
 const express = require('express');
 const { Pool } = require('pg');
-const app = express();
-const port = 3000;
+const path = require('path');
+require('dotenv').config();
 
-// PostgreSQL connection pool
+const app = express();
+const port = process.env.PORT || 3000;
+
+// PostgreSQL connection pool using DATABASE_URL
 const pool = new Pool({
-    user: process.env.DB_USER,
-    host: process.env.DB_HOST,
-    database: process.env.DB_NAME,
-    password: process.env.DB_PASSWORD,
-    port: process.env.DB_PORT,
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+        rejectUnauthorized: false
+    }
 });
 
 // API endpoint to search for names
 app.get('/api/search', async (req, res) => {
     const { name } = req.query;
     try {
-        const result = await pool.query('SELECT name, audio_url FROM names WHERE name ILIKE $1', [`%${name}%`]);
+        const result = await pool.query('SELECT *');
         res.json(result.rows);
     } catch (err) {
         console.error(err);
@@ -25,7 +27,7 @@ app.get('/api/search', async (req, res) => {
 });
 
 // Serve static files (your HTML and other assets)
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
