@@ -5,11 +5,11 @@ const port = 3000;
 
 // PostgreSQL connection pool
 const pool = new Pool({
-    user: 'your_db_user',
-    host: 'your_db_host',
-    database: 'your_db_name',
-    password: 'your_db_password',
-    port: 5432,
+    user: process.env.DB_USER,
+    host: process.env.DB_HOST,
+    database: process.env.DB_NAME,
+    password: process.env.DB_PASSWORD,
+    port: process.env.DB_PORT,
 });
 
 // API endpoint to search for names
