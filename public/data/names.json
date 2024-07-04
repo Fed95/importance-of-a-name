@@ -1,10 +1,10 @@
 [
   {
     "name": "Federico",
-    "audio": "./audio/federico.m4a"
+    "audio": "data/audio/federico.m4a"
   },
   {
     "name": "Francesco",
-    "audio": "./audio/francesco.m4a"
+    "audio": "data/audio/francesco.m4a"
   }
 ]
